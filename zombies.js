@@ -132,7 +132,24 @@ class Player {
       }
     }
   }
+  discardItem(item){
+    if(alvinsDiscardItem instanceof Player){
+
+      if(this._pack.indexOf(item) === -1){
+        console.log(this.item + ' could not be found. No ' + this.item + 'discarded.');
+        return false;
+      }else{
+        this.getPack().splice(this._pack.indexOf(item), 1);
+        console.log(this.name + ', ' + this.item + ' was discarded.');
+        return true;
+      }
+    }
+  }
 };
+
+
+
+
 
 /**
  * Player Class Method => checkPack()
@@ -191,8 +208,7 @@ let alvinsTakeItem = new Player();
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
-
-
+let alvinsDiscardItem = new Player();
 /**
  * Player Class Method => equip(itemToEquip)
  * -----------------------------
