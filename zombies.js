@@ -107,19 +107,6 @@ function Player (name, health, strength, speed) {
   this.getMaxHealth = function getMaxHealth(){
     return this._maxHealth;
   };
-  this.checkPack = function () {
-    console.log(this.getPack());
-  };
-  this.takeItem = function(item) {
-    if(this._pack.length > 3){
-      this.name = name;
-      this._pack.push(item);
-      console.log('Nice! ' + this.name + 'added ' + this.item + ' to the pack.');
-    }else{
-      console.log('The pack is full so item could not be stored');
-      return false;
-    }
-  }
 };
 
 
@@ -135,7 +122,9 @@ function Player (name, health, strength, speed) {
  *
  * @name checkPack
  */
-
+Player.prototype.checkPack = function () {
+    console.log(this.getPack());
+  };
 
 /**
  * Player Class Method => takeItem(item)
@@ -155,8 +144,27 @@ function Player (name, health, strength, speed) {
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
 
+Player.prototype.takeItem = function(item) {
+    if(this._pack.length < 3){
+      this._pack.push(item);
+      console.log('Nice! ' + Player.name + 'added ' + item + ' to the pack.');
+    }else{
+      console.log('The pack is full so item could not be stored');
+      return false;
+    }
+  }
 
+// Player.prototype.takeItem = function(item){
 
+//     if(this._pack.length > 2){
+//       console.log('pack is full ' + Player.name);
+//       return false;
+
+//     }else{
+//       console.log(Player.name + 'storing ' + item + 'was successful');
+//       this._pack.push(item);
+//     }
+//   };
 
 /**
  * Player Class Method => discardItem(item)
