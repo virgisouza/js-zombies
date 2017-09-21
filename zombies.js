@@ -28,7 +28,6 @@ function Item(name){
  */
 function Weapon (name, damage){
   Item.call(this, name);
-  this.name = name;
   this.damage = damage;
 };
 
@@ -58,7 +57,6 @@ Weapon.prototype = Object.create(Item.prototype);
  */
 function Food (name, energy){
   Item.call(this, name);
-  this.name = name;
   this.energy = energy;
 }
 
@@ -100,7 +98,7 @@ function Player (name, health, strength, speed) {
   this._pack = [];
   this._maxHealth = health;
   this.isAlive = true;
-  this.equppied = false;
+  this.equipped = false;
   this.getPack = function getPack(){
     return this._pack;
   };
@@ -223,7 +221,18 @@ Player.prototype.discardItem = function (item) {
  * @name equip
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
+Player.prototype.equip = function (itemToEquip) {
+  var getItem = this._pack.indexOf(itemToEquip);
 
+  if(itemToEquip instanceof Weapon && getItem > -1 && !this.equipped){ //player doesn't have weapon equipped
+     this.equipped = itemToEquip; //equip the item
+     this._pack.splice(getItem, 1); //remove it from the pack
+  }else if(itemToEquip instanceof Weapon && this.equipped !== false){
+    let newWeapon = this.equipped;
+    this.equipped = itemToEquip;
+    this._pack.splice(getItem, 1, newWeapon);
+  }
+};
 
 /**
  * Player Class Method => eat(itemToEat)
