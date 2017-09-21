@@ -101,9 +101,28 @@ function Player (name, health, strength, speed) {
   this._maxHealth = health;
   this.isAlive = true;
   this.equppied = false;
-  this.getPack = this._pack;
-  this.getMaxHealth = this._maxHealth;
-}
+  this.getPack = function getPack(){
+    return this._pack;
+  };
+  this.getMaxHealth = function getMaxHealth(){
+    return this._maxHealth;
+  };
+  this.checkPack = function () {
+    console.log(this.getPack());
+  };
+  this.takeItem = function(item) {
+    if(this._pack.length > 3){
+      this.name = name;
+      this._pack.push(item);
+      console.log('Nice! ' + this.name + 'added ' + this.item + ' to the pack.');
+    }else{
+      console.log('The pack is full so item could not be stored');
+      return false;
+    }
+  }
+};
+
+
 
 /**
  * Player Class Method => checkPack()
@@ -135,6 +154,8 @@ function Player (name, health, strength, speed) {
  * @param {Item/Weapon/Food} item   The item to take.
  * @return {boolean} true/false     Whether player was able to store item in pack.
  */
+
+
 
 
 /**
