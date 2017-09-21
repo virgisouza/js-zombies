@@ -152,7 +152,7 @@ Player.prototype.takeItem = function(item) {
       console.log('The pack is full so item could not be stored');
       return false;
     }
-  }
+  };
 
 // Player.prototype.takeItem = function(item){
 
@@ -191,7 +191,18 @@ Player.prototype.takeItem = function(item) {
  * @param {Item/Weapon/Food} item   The item to discard.
  * @return {boolean} true/false     Whether player was able to remove item from pack.
  */
+Player.prototype.discardItem = function (item) {
+  var getItem = this._pack.indexOf(item);
 
+    if(getItem === -1){
+      console.log(item + ' could not be found. No ' + item + 'discarded.');
+      return false;
+    }else{
+      this.getPack().splice(getItem, 1);
+      console.log(name + ', ' + item + ' was discarded.');
+      return true;
+    }
+}
 
 /**
  * Player Class Method => equip(itemToEquip)
@@ -278,7 +289,13 @@ Player.prototype.takeItem = function(item) {
  * @property {number} speed
  * @property {boolean} isAlive      Default value should be `true`.
  */
-
+function Zombie (health, strength, speed) {
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  this._maxHealth = health;
+  this.isAlive = true;
+};
 
 /**
  * Class => FastZombie(health, strength, speed)
@@ -294,7 +311,11 @@ Player.prototype.takeItem = function(item) {
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
+function FastZombie (health, strength, speed) {
+  Zombie.call(this, health, strength, speed)
+};
 
+FastZombie.prototype = Object.create(Zombie.prototype);
 
 /**
  * FastZombie Extends Zombie Class
@@ -317,7 +338,11 @@ Player.prototype.takeItem = function(item) {
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
+function StrongZombie (health, strength, speed) {
+  Zombie.call(this, health, strength, speed)
+};
 
+StrongZombie.prototype = Object.create(Zombie.prototype);
 
 /**
  * StrongZombie Extends Zombie Class
@@ -340,7 +365,11 @@ Player.prototype.takeItem = function(item) {
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
+function RangedZombie (health, strength, speed) {
+  Zombie.call(this, health, strength, speed)
+};
 
+RangedZombie.prototype = Object.create(Zombie.prototype);
 
 /**
  * RangedZombie Extends Zombie Class
@@ -363,7 +392,11 @@ Player.prototype.takeItem = function(item) {
  * @param {number} strength         The zombie's strength.
  * @param {number} speed            The zombie's speed.
  */
+function ExplodingZombie (health, strength, speed) {
+  Zombie.call(this, health, strength, speed)
+};
 
+ExplodingZombie.prototype = Object.create(Zombie.prototype);
 
 /**
  * ExplodingZombie Extends Zombie Class
