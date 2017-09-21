@@ -227,10 +227,10 @@ Player.prototype.equip = function (itemToEquip) {
   if(itemToEquip instanceof Weapon && getItem > -1 && !this.equipped){ //player doesn't have weapon equipped
      this.equipped = itemToEquip; //equip the item
      this._pack.splice(getItem, 1); //remove it from the pack
-  }else if(itemToEquip instanceof Weapon && this.equipped !== false){
+  }else if(itemToEquip instanceof Weapon && this.equipped !== false){ //player HAS weapon equipped
     let newWeapon = this.equipped;
-    this.equipped = itemToEquip;
-    this._pack.splice(getItem, 1, newWeapon);
+    this.equipped = itemToEquip; //set equppied property to itemToEquip
+    this._pack.splice(getItem, 1, newWeapon); //replace item in pack with newWeapon
   }
 };
 
@@ -252,7 +252,17 @@ Player.prototype.equip = function (itemToEquip) {
  * @name eat
  * @param {Food} itemToEat  The food item to eat.
  */
+Player.prototype.eat = function (itemToEat) {
+  var getItem = this._pack.indexOf(itemToEat);
 
+  if(itemToEat instanceof Food && getItem > -1 && (this.health + itemToEat.energy) > this.getMaxHealth()){ //if item is food && is in pack
+    this._pack.splice(getItem, 1);
+    this.health = this.getMaxHealth();
+  }else if(itemToEat instanceof Food && getItem > -1){
+    this._pack.splice(getItem, 1);
+    this.health += itemToEat.energy;
+  }
+};
 
 /**
  * Player Class Method => useItem(item)
@@ -266,7 +276,14 @@ Player.prototype.equip = function (itemToEquip) {
  * @name useItem
  * @param {Item/Weapon/Food} item   The item to use.
  */
+Player.prototype.useItem = function (item) {
 
+ if(item instanceof Weapon){
+      this.equip(item);
+    }else if( item instanceof Food){
+      this.eat(item);
+    }
+  }
 
 /**
  * Player Class Method => equippedWith()
@@ -281,7 +298,14 @@ Player.prototype.equip = function (itemToEquip) {
  * @name equippedWith
  * @return {string/boolean}   Weapon name or false if nothing is equipped.
  */
-
+Player.prototype.equippedWith = function () {
+  if(this.equipped === false){
+      console.log('Not equipped');
+      return false;
+    }else{
+      return this.equipped.name;
+    }
+};
 
 /**
  * Class => Zombie(health, strength, speed)
